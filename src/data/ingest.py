@@ -1,31 +1,44 @@
 """
 Módulo de ingesta de datos.
 
-Este módulo es responsable de cargar el dataset clínico y las señales ECG
-desde los archivos de entrada. No realiza transformaciones ni limpieza;
-únicamente centraliza la lectura de datos para mantener el pipeline
-modular y reproducible.
+Responsabilidades:
+- Conectarse a Azure Blob Storage.
+- Leer los archivos almacenados.
+- Entregar los datos al resto del pipeline.
 
-Autor: Valentín Moreno Vásquez
-Proyecto: Prueba Técnica MLOps - Salva Health
+Este módulo NO realiza validaciones ni transformaciones.
 """
 
-from pathlib import Path
+from io import BytesIO
 
 import pandas as pd
+from azure.storage.blob import BlobServiceClient
 
-from src.utils.config import RAW_DATA_PATH, SIGNALS_PATH
+from src.utils.secrets import (AZURE_STORAGE_CONNECTION_STRING,AZURE_CONTAINER_NAME,)
+
 
 def load_patients() -> pd.DataFrame:
     """
-    Carga el archivo pacientes.csv.
+    Carga el archivo pacientes.csv desde Azure Blob Storage.
 
     Returns
-
+    -------
     pd.DataFrame
-        DataFrame con la información clínica de los pacientes.
+        Información clínica de los pacientes.
     """
 
-    patients_path = RAW_DATA_PATH / "pacientes.csv"
+    blob_service = BlobServiceClient.from_connection_string(
+        AZURE_STORAGE_CONNECTION_STRING
+    )
 
-    return pd.read_csv(patients_path)
+    container = blob_service.get_container_client(
+        AZURE_CONTAINER_NAME
+    )
+
+    blob = container.get_blob_client("pacientes.csv")
+
+    data = blob.download_blob().readall()
+
+    patients = pd.read_csv(BytesIO(data))
+
+    return patients

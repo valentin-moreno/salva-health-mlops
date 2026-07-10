@@ -1,0 +1,16 @@
+# Variables de entorno
+config/.env
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# MLflow
+mlruns/
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
