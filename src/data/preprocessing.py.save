@@ -126,14 +126,23 @@ def encode_variables(df: pd.DataFrame) -> pd.DataFrame:
 
     return df
 
-def remove_duplicates(df: pd.DataFrame) -> pd.DataFrame:
+def remove_exact_duplicates(df: pd.DataFrame) -> pd.DataFrame:
     """
     Elimina registros completamente duplicados.
 
     No elimina pacientes con el mismo ID si contienen
     información clínica diferente.
     """
-    df = df.drop_duplicates(subset="id_paciente")
+
+    df = df.copy()
+
+    before = len(df)
+
+    df = df.drop_duplicates()
+
+    after = len(df)
+
+    print(f"Duplicados exactos eliminados: {before - after}")
 
     return df
 
@@ -158,6 +167,7 @@ def preprocess_dataset(df: pd.DataFrame) -> pd.DataFrame:
 
     df = encode_variables(df)
 
-    df = remove_duplicates(df)
+    df = 
 
     return df
+ remove_exact_duplicates(df
