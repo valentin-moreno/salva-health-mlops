@@ -2,13 +2,8 @@
 Pipeline completo de entrenamiento.
 
 Ejecuta de forma reproducible el proceso de entrenamiento,
-evaluación y registro de experimentos.
-
-Responsabilidades:
-- Preparar los datos.
-- Entrenar múltiples modelos.
-- Evaluarlos.
-- Registrar experimentos en MLflow.
+evaluación, registro de experimentos, selección del mejor
+modelo y almacenamiento para despliegue.
 
 Autor: Valentin Moreno Vásquez
 Proyecto: Salva Health MLOps
@@ -21,19 +16,19 @@ from src.data.split import prepare_train_test
 from src.models.register import get_models
 from src.models.train import train_model
 from src.models.evaluate import evaluate_model
+from src.models.select_best import select_best_model
+from src.models.save_model import save_model
 from src.tracking.mlflow_tracking import log_experiment
 
 
-def run_training_pipeline() -> tuple[pd.DataFrame, dict]:
+def run_training_pipeline() -> pd.DataFrame:
     """
     Ejecuta el pipeline completo de entrenamiento.
 
     Returns
     -------
-    tuple[pd.DataFrame, dict]
-
-    - DataFrame con las métricas de todos los modelos.
-    - Diccionario con los modelos entrenados.
+    pd.DataFrame
+        Resumen de métricas obtenidas por cada modelo.
     """
 
     print("PIPELINE DE ENTRENAMIENTO")
@@ -53,6 +48,7 @@ def run_training_pipeline() -> tuple[pd.DataFrame, dict]:
     for name, model in models.items():
 
         print()
+
         print(f"Entrenando: {name}")
 
         trained_model = train_model(
@@ -82,10 +78,24 @@ def run_training_pipeline() -> tuple[pd.DataFrame, dict]:
             }
         )
 
-    print()
-    print("✓ Pipeline ejecutado correctamente.")
+    results = pd.DataFrame(results)
 
-    return (
-        pd.DataFrame(results),
+    best_model, best_model_name, best_metrics = select_best_model(
+        results,
         trained_models,
     )
+
+    save_model(best_model)
+
+    print()
+
+    print("PIPELINE FINALIZADO")
+
+    print(f"Modelo seleccionado : {best_model_name}")
+    print(f"ROC AUC             : {best_metrics['roc_auc']:.4f}")
+
+    print()
+
+    print(" Modelo almacenado correctamente.")
+
+    return results
