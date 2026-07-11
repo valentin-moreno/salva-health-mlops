@@ -6,7 +6,7 @@ Responsabilidades:
 - Calcular características de energía.
 - Generar un vector de características por señal.
 
-Elaborado por: Valentin Moreno Vásquez
+Autor: Valentin Moreno Vásquez
 Proyecto: Salva Health MLOps
 """
 
