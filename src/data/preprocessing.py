@@ -9,7 +9,9 @@ Responsabilidades:
 - Tratamiento de valores faltantes.
 - Codificación de variables categóricas.
 - Preparación de variable objetivo.
+- Eliminación de duplicados.
 
+Autor: Valentin Moreno Vásquez
 Proyecto: Salva Health MLOps
 """
 

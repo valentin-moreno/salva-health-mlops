@@ -19,15 +19,8 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
 # RUTAS DE DATOS
 
-# Directorio donde se encuentran los datos originales entregados
-# para la prueba técnica.
-RAW_DATA_PATH = PROJECT_ROOT / "data" / "raw"
-
 # Directorio donde se almacenarán los datos procesados.
 PROCESSED_DATA_PATH = PROJECT_ROOT / "data" / "processed"
-
-# Carpeta que contiene las señales ECG individuales.
-SIGNALS_PATH = RAW_DATA_PATH / "senales"
 
 # RUTAS DE ARTEFACTOS
 

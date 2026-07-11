@@ -137,3 +137,86 @@ def validate_dataset(df: pd.DataFrame) -> bool:
     validate_ecg_configuration(df)
 
     return True
+
+# VALIDACION DE SEÑALES ECG 
+
+# Columnas esperadas de cada señal ECG
+REQUIRED_SIGNAL_COLUMNS = [
+    "t_seg",
+    "ecg_mV",
+]
+
+# Longitud esperada de cada señal
+EXPECTED_SIGNAL_LENGTH = 2500
+
+# VALIDACION DE COLUMNAS DE SEÑALES ECG
+def validate_signal_columns(signal: pd.DataFrame) -> None:
+    """
+    Verifica que la señal tenga las columnas esperadas.
+    """
+
+    missing_columns = (
+        set(REQUIRED_SIGNAL_COLUMNS)
+        - set(signal.columns)
+    )
+
+    if missing_columns:
+        raise ValueError(
+            f"Columnas faltantes en la señal: {missing_columns}"
+        )
+
+def validate_signal_missing_values(
+    signal: pd.DataFrame,
+) -> None:
+    """
+    Verifica que la señal no contenga valores nulos.
+    """
+
+    if signal.isnull().values.any():
+        raise ValueError(
+            "La señal contiene valores nulos."
+        )
+    
+def validate_signal_length(
+    signal: pd.DataFrame,
+) -> None:
+    """
+    Verifica que la señal tenga la longitud esperada.
+    """
+
+    if len(signal) != EXPECTED_SIGNAL_LENGTH:
+        raise ValueError(
+            f"La señal contiene {len(signal)} muestras "
+            f"y se esperaban {EXPECTED_SIGNAL_LENGTH}."
+        )
+
+def validate_signal_dtypes(
+    signal: pd.DataFrame,
+) -> None:
+    """
+    Verifica que las columnas sean numéricas.
+    """
+
+    if not pd.api.types.is_numeric_dtype(signal["t_seg"]):
+        raise ValueError(
+            "La columna t_seg debe ser numérica."
+        )
+
+    if not pd.api.types.is_numeric_dtype(signal["ecg_mV"]):
+        raise ValueError(
+            "La columna ecg_mV debe ser numérica."
+        )
+
+def validate_signal(
+    signal: pd.DataFrame,
+) -> bool:
+    """
+    Ejecuta todas las validaciones de una señal ECG.
+    """
+
+    validate_signal_columns(signal)
+    validate_signal_missing_values(signal)
+    validate_signal_length(signal)
+    validate_signal_dtypes(signal)
+
+    return True            
