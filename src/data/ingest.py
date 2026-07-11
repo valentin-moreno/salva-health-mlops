@@ -12,6 +12,9 @@ Este módulo NO realiza validaciones ni transformaciones.
 from io import BytesIO
 
 import pandas as pd
+
+from src.utils.config import PROCESSED_DATA_PATH
+
 from azure.storage.blob import BlobServiceClient, ContainerClient
 
 from src.utils.secrets import (
@@ -107,3 +110,25 @@ def load_signal(patient_id: str) -> pd.DataFrame:
     data = blob.download_blob().readall()
 
     return pd.read_csv(BytesIO(data))
+
+
+def load_processed_dataset(
+    filename: str,
+) -> pd.DataFrame:
+    """
+    Carga un dataset procesado almacenado en formato Parquet.
+
+    Parameters
+    ----------
+    filename : str
+        Nombre del archivo Parquet ubicado en data/processed.
+
+    Returns
+    -------
+    pd.DataFrame
+        Dataset procesado.
+    """
+
+    filepath = PROCESSED_DATA_PATH / filename
+
+    return pd.read_parquet(filepath)

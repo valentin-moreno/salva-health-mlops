@@ -70,6 +70,39 @@ def clean_dates(df: pd.DataFrame) -> pd.DataFrame:
 
     return df
 
+def clean_outliers(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Corrige valores clínicamente imposibles.
+
+    Actualmente se valida:
+
+    - Edad entre 0 y 120 años.
+
+    Los valores fuera de ese rango se convierten en valores
+    faltantes para ser imputados posteriormente.
+    """
+
+    df = df.copy()
+
+    invalid_age = (
+        (df["edad_paciente"] < 0)
+        | (df["edad_paciente"] > 120)
+    )
+
+    outliers = invalid_age.sum()
+
+    if outliers > 0:
+        print(
+            f"Advertencia: {outliers} edades fuera del rango permitido."
+        )
+
+        df.loc[
+            invalid_age,
+            "edad_paciente",
+        ] = pd.NA
+
+    return df
+
 def handle_missing_values(df: pd.DataFrame) -> pd.DataFrame:
     """
     Imputa valores faltantes en variables clínicas.
@@ -101,6 +134,25 @@ def handle_missing_values(df: pd.DataFrame) -> pd.DataFrame:
         df[column] = df[column].fillna(
             df[column].mode()[0]
         )
+
+    return df
+
+def calculate_bmi(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Calcula el Índice de Masa Corporal (IMC).
+
+    IMC = peso (kg) / altura (m)^2
+
+    La nueva variable aporta un indicador clínico derivado
+    del peso y la altura.
+    """
+
+    df = df.copy()
+
+    df["imc"] = (
+        df["peso_kg"]
+        / ((df["altura_cm"] / 100) ** 2)
+    )
 
     return df
 
@@ -156,7 +208,11 @@ def preprocess_dataset(df: pd.DataFrame) -> pd.DataFrame:
 
     df = clean_dates(df)
 
+    df = clean_outliers(df)
+
     df = handle_missing_values(df)
+
+    df = calculate_bmi(df)
 
     df = encode_variables(df)
 

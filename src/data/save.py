@@ -41,4 +41,4 @@ def save_parquet(
         index=False,
     )
 
-    print(f"✓ Archivo guardado en: {output_path}")
+    print(f"Archivo guardado en: {output_path}")
