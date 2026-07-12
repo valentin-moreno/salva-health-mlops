@@ -14,6 +14,15 @@ from xgboost import XGBClassifier
 
 
 def get_models():
+    """
+    Devuelve los modelos candidatos para el proceso
+    de comparación.
+
+    Returns
+    -------
+    dict
+        Diccionario de modelos.
+    """
 
     models = {
 
@@ -23,17 +32,12 @@ def get_models():
         ),
 
         "random_forest": RandomForestClassifier(
-            n_estimators=100,
-            max_depth=6,
             random_state=42,
         ),
 
         "xgboost": XGBClassifier(
-            n_estimators=100,
-            max_depth=6,
-            learning_rate=0.1,
-            eval_metric="logloss",
             random_state=42,
+            eval_metric="logloss",
         ),
     }
 

@@ -34,7 +34,7 @@ def run_training_pipeline() -> pd.DataFrame:
     print("PIPELINE DE ENTRENAMIENTO")
 
     mlflow.set_experiment(
-        "Salva_Health_Model_Comparison"
+        "Salva_Health_Model_Training"
     )
 
     X_train, X_test, y_train, y_test = prepare_train_test()

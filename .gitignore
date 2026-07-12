@@ -7,9 +7,6 @@ config/.env
 mlruns/
 mlflow.db
 
-# Model artifacts
-artifacts/models/
-
 # Processed data
 data/processed/
 

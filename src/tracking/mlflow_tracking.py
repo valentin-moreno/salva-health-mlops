@@ -21,16 +21,30 @@ def log_experiment(
     Registra un experimento en MLflow.
     """
 
-    with mlflow.start_run(
-        run_name=model_name
-    ):
+    with mlflow.start_run(run_name=model_name):
 
+        # Información general
+        mlflow.set_tags(
+            {
+                "author": "Valentin Moreno Vásquez",
+                "project": "Salva Health MLOps",
+                "stage": "training",
+                "framework": model_name,
+            }
+        )
+
+        # Nombre del modelo
         mlflow.log_param(
             "model",
             model_name,
         )
 
-        # Registrar métricas
+        # Hiperparámetros
+        mlflow.log_params(
+            model.get_params()
+        )
+
+        # Métricas
         for metric_name, value in metrics.items():
 
             if metric_name != "confusion_matrix":
@@ -40,9 +54,8 @@ def log_experiment(
                     float(value),
                 )
 
-
-        # Guardado específico según modelo
-        if model_name == "xgboost":
+        # Modelo
+        if model_name.lower() == "xgboost":
 
             mlflow.xgboost.log_model(
                 model,
