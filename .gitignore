@@ -7,9 +7,6 @@ config/.env
 mlruns/
 mlflow.db
 
-# Processed data
-data/processed/
-
 # Jupyter
 .ipynb_checkpoints/
 
