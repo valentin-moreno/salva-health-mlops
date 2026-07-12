@@ -18,6 +18,13 @@ router = APIRouter()
 
 model = load_model()
 
+@router.get("/")
+def home():
+
+    return {
+        "message": "Salva Health API",
+        "status": "running"
+    }
 
 @router.post("/predict")
 def predict_patient(data: PatientFeatures):
@@ -36,4 +43,12 @@ def predict_patient(data: PatientFeatures):
         "probability": float(
             probability[0][1]
         ),
+    }
+
+@router.get("/health")
+def health_check():
+
+    return {
+        "status": "healthy",
+        "service": "salva-health-api"
     }
