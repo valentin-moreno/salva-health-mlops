@@ -99,3 +99,6 @@ def run_training_pipeline() -> pd.DataFrame:
     print(" Modelo almacenado correctamente.")
 
     return results
+
+if __name__ == "__main__":
+    run_training_pipeline()
