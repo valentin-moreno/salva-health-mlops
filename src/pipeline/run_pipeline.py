@@ -76,7 +76,7 @@ def run_pipeline():
 
     save_parquet(
         dataset,
-        "dataset.parquet",
+        "dataset_final.parquet",
     )
 
     # 6. Entrenamiento

@@ -1,17 +1,22 @@
-# Variables de entorno
-config/.env
-
 # Python
 __pycache__/
-*.py[cod]
-.venv/
-venv/
 *.pyc
+config/.env
 
 # MLflow
 mlruns/
+mlflow.db
 
-# Archivos del sistema
+# Model artifacts
+artifacts/models/
+
+# Processed data
+data/processed/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
 .DS_Store
 Thumbs.db
 
