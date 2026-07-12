@@ -1,10 +1,48 @@
-pandas
-numpy
-scikit-learn
-xgboost
-mlflow
-azure-storage-blob
-python-dotenv
-pytest
-black
-flake8
+# Salva Health MLOps
+# Dependencies
+# Author: Valentin Moreno Vásquez
+
+
+# Machine Learning
+
+numpy==2.5.1
+pandas==2.3.3
+scipy==1.18.0
+scikit-learn==1.9.0
+xgboost==3.3.0
+joblib==1.5.3
+
+
+# Experiment Tracking
+
+mlflow==3.14.0
+
+
+# API
+
+fastapi==0.139.0
+uvicorn==0.51.0
+pydantic==2.13.4
+
+
+# Data Storage
+
+azure-storage-blob==12.30.0
+pyarrow==24.0.0
+
+
+# Configuration
+
+python-dotenv==1.2.2
+
+
+# Visualization
+
+matplotlib==3.11.0
+
+
+# Development
+
+pytest==9.1.1
+black==26.5.1
+flake8==7.3.0
