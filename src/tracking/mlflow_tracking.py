@@ -10,7 +10,8 @@ Proyecto: Salva Health MLOps
 import mlflow
 import mlflow.sklearn
 import mlflow.xgboost
-
+from src.utils.config import RANDOM_STATE
+from src.utils.config import TEST_SIZE
 
 def log_experiment(
     model,
@@ -37,6 +38,21 @@ def log_experiment(
         mlflow.log_param(
             "model",
             model_name,
+        )
+
+        mlflow.log_param(
+            "dataset",
+            "dataset_final.parquet",
+        )
+
+        mlflow.log_param(
+            "random_state",
+            RANDOM_STATE
+        )
+        
+        mlflow.log_param(
+            "test_size",
+              TEST_SIZE
         )
 
         # Hiperparámetros
