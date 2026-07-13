@@ -32,7 +32,6 @@ def run_pipeline():
         Resumen de métricas de los modelos entrenados.
     """
 
-  
     print("SALVA HEALTH MLOPS PIPELINE")
 
     # 1. Ingesta

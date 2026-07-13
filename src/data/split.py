@@ -13,7 +13,6 @@ Autor: Valentin Moreno Vásquez
 Proyecto: Salva Health MLOps
 """
 
-
 import pandas as pd
 
 from sklearn.model_selection import train_test_split
@@ -87,6 +86,7 @@ def split_dataset(
         stratify=y,
     )
 
+
 def prepare_train_test(
     dataset_path: str | None = None,
 ):
@@ -109,15 +109,11 @@ def prepare_train_test(
 
     if dataset_path is None:
 
-        dataset = load_processed_dataset(
-            "dataset_final.parquet"
-        )
+        dataset = load_processed_dataset("dataset_final.parquet")
 
     else:
 
-        dataset = pd.read_parquet(
-            Path(dataset_path)
-        )
+        dataset = pd.read_parquet(Path(dataset_path))
 
     X, y = prepare_features(dataset)
 

@@ -13,25 +13,21 @@ from src.models.load_model import load_model
 from src.models.predict import predict
 from src.api.schemas import PatientFeatures
 
-
 router = APIRouter()
 
 model = load_model()
 
+
 @router.get("/")
 def home():
 
-    return {
-        "message": "Salva Health API",
-        "status": "running"
-    }
+    return {"message": "Salva Health API", "status": "running"}
+
 
 @router.post("/predict")
 def predict_patient(data: PatientFeatures):
 
-    X = pd.DataFrame(
-        [data.model_dump()]
-    )
+    X = pd.DataFrame([data.model_dump()])
 
     prediction, probability = predict(
         model,
@@ -40,15 +36,11 @@ def predict_patient(data: PatientFeatures):
 
     return {
         "prediction": int(prediction[0]),
-        "probability": float(
-            probability[0][1]
-        ),
+        "probability": float(probability[0][1]),
     }
+
 
 @router.get("/health")
 def health_check():
 
-    return {
-        "status": "healthy",
-        "service": "salva-health-api"
-    }
+    return {"status": "healthy", "service": "salva-health-api"}

@@ -25,16 +25,13 @@ def get_models():
     """
 
     models = {
-
         "logistic_regression": LogisticRegression(
             max_iter=1000,
             random_state=42,
         ),
-
         "random_forest": RandomForestClassifier(
             random_state=42,
         ),
-
         "xgboost": XGBClassifier(
             random_state=42,
             eval_metric="logloss",

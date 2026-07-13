@@ -10,9 +10,7 @@ Proyecto: Salva Health MLOps
 
 """
 
-
 import pandas as pd
-
 
 # Columnas esperadas del dataset clínico
 REQUIRED_COLUMNS = [
@@ -54,9 +52,7 @@ def validate_columns(df: pd.DataFrame) -> None:
     missing_columns = set(REQUIRED_COLUMNS) - set(df.columns)
 
     if missing_columns:
-        raise ValueError(
-            f"Columnas faltantes en dataset: {missing_columns}"
-        )
+        raise ValueError(f"Columnas faltantes en dataset: {missing_columns}")
 
 
 def validate_missing_values(df: pd.DataFrame) -> None:
@@ -91,9 +87,7 @@ def validate_labels(df: pd.DataFrame) -> None:
     invalid_labels = labels - set(VALID_LABELS)
 
     if invalid_labels:
-        raise ValueError(
-            f"Etiquetas inválidas encontradas: {invalid_labels}"
-        )
+        raise ValueError(f"Etiquetas inválidas encontradas: {invalid_labels}")
 
 
 def validate_ecg_configuration(df: pd.DataFrame) -> None:
@@ -106,14 +100,10 @@ def validate_ecg_configuration(df: pd.DataFrame) -> None:
     """
 
     if not all(df["derivacion_ecg"] == "II"):
-        raise ValueError(
-            "Se encontraron derivaciones ECG diferentes a II"
-        )
+        raise ValueError("Se encontraron derivaciones ECG diferentes a II")
 
     if not all(df["frecuencia_muestreo_hz"] == 250):
-        raise ValueError(
-            "La frecuencia de muestreo debe ser 250 Hz"
-        )
+        raise ValueError("La frecuencia de muestreo debe ser 250 Hz")
 
 
 def validate_dataset(df: pd.DataFrame) -> bool:
@@ -138,7 +128,8 @@ def validate_dataset(df: pd.DataFrame) -> bool:
 
     return True
 
-# VALIDACION DE SEÑALES ECG 
+
+# VALIDACION DE SEÑALES ECG
 
 # Columnas esperadas de cada señal ECG
 REQUIRED_SIGNAL_COLUMNS = [
@@ -149,21 +140,18 @@ REQUIRED_SIGNAL_COLUMNS = [
 # Longitud esperada de cada señal
 EXPECTED_SIGNAL_LENGTH = 2500
 
+
 # VALIDACION DE COLUMNAS DE SEÑALES ECG
 def validate_signal_columns(signal: pd.DataFrame) -> None:
     """
     Verifica que la señal tenga las columnas esperadas.
     """
 
-    missing_columns = (
-        set(REQUIRED_SIGNAL_COLUMNS)
-        - set(signal.columns)
-    )
+    missing_columns = set(REQUIRED_SIGNAL_COLUMNS) - set(signal.columns)
 
     if missing_columns:
-        raise ValueError(
-            f"Columnas faltantes en la señal: {missing_columns}"
-        )
+        raise ValueError(f"Columnas faltantes en la señal: {missing_columns}")
+
 
 def validate_signal_missing_values(
     signal: pd.DataFrame,
@@ -173,10 +161,9 @@ def validate_signal_missing_values(
     """
 
     if signal.isnull().values.any():
-        raise ValueError(
-            "La señal contiene valores nulos."
-        )
-    
+        raise ValueError("La señal contiene valores nulos.")
+
+
 def validate_signal_length(
     signal: pd.DataFrame,
 ) -> None:
@@ -190,6 +177,7 @@ def validate_signal_length(
             f"y se esperaban {EXPECTED_SIGNAL_LENGTH}."
         )
 
+
 def validate_signal_dtypes(
     signal: pd.DataFrame,
 ) -> None:
@@ -198,14 +186,11 @@ def validate_signal_dtypes(
     """
 
     if not pd.api.types.is_numeric_dtype(signal["t_seg"]):
-        raise ValueError(
-            "La columna t_seg debe ser numérica."
-        )
+        raise ValueError("La columna t_seg debe ser numérica.")
 
     if not pd.api.types.is_numeric_dtype(signal["ecg_mV"]):
-        raise ValueError(
-            "La columna ecg_mV debe ser numérica."
-        )
+        raise ValueError("La columna ecg_mV debe ser numérica.")
+
 
 def validate_signal(
     signal: pd.DataFrame,
@@ -219,4 +204,4 @@ def validate_signal(
     validate_signal_length(signal)
     validate_signal_dtypes(signal)
 
-    return True            
+    return True

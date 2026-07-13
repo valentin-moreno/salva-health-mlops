@@ -8,15 +8,11 @@ Autor: Valentin Moreno Vásquez
 Proyecto: Salva Health MLOps
 """
 
-
 from pathlib import Path
 
 import joblib
 
-
-MODEL_PATH = Path(
-    "artifacts/models/best_model.joblib"
-)
+MODEL_PATH = Path("artifacts/models/best_model.joblib")
 
 
 def load_model():
@@ -31,9 +27,7 @@ def load_model():
 
     if not MODEL_PATH.exists():
 
-        raise FileNotFoundError(
-            f"No se encontró el modelo en: {MODEL_PATH}"
-        )
+        raise FileNotFoundError(f"No se encontró el modelo en: {MODEL_PATH}")
 
     model = joblib.load(
         MODEL_PATH,

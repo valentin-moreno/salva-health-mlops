@@ -21,10 +21,12 @@ from src.models.save_model import save_model
 from src.tracking.mlflow_tracking import log_experiment
 
 
-def run_training_pipeline(dataset_path: str | None = None,) -> pd.DataFrame:
+def run_training_pipeline(
+    dataset_path: str | None = None,
+) -> pd.DataFrame:
     """
     Ejecuta el pipeline completo de entrenamiento.
-    
+
     Parameters
     ----------
     dataset_path : str, optional
@@ -40,9 +42,7 @@ def run_training_pipeline(dataset_path: str | None = None,) -> pd.DataFrame:
 
     print("PIPELINE DE ENTRENAMIENTO")
 
-    mlflow.set_experiment(
-        "Salva_Health_Model_Training"
-    )
+    mlflow.set_experiment("Salva_Health_Model_Training")
 
     X_train, X_test, y_train, y_test = prepare_train_test(
         dataset_path=dataset_path,
@@ -108,6 +108,7 @@ def run_training_pipeline(dataset_path: str | None = None,) -> pd.DataFrame:
     print(" Modelo almacenado correctamente.")
 
     return results
+
 
 if __name__ == "__main__":
     run_training_pipeline()

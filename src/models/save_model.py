@@ -18,6 +18,7 @@ import joblib
 
 MODEL_DIRECTORY = Path("artifacts/models")
 
+
 def save_model(model) -> Path:
     """
     Guarda el mejor modelo entrenado.
@@ -38,10 +39,7 @@ def save_model(model) -> Path:
         exist_ok=True,
     )
 
-    model_path = (
-        MODEL_DIRECTORY
-        / "best_model.joblib"
-    )
+    model_path = MODEL_DIRECTORY / "best_model.joblib"
 
     joblib.dump(
         model,

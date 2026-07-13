@@ -9,7 +9,6 @@ Autor: Valentín Moreno Vásquez
 Proyecto: Prueba Técnica MLOps - Salva Health
 """
 
-
 import pandas as pd
 
 from src.utils.config import PROCESSED_DATA_PATH

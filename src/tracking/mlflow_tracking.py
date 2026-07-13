@@ -40,9 +40,7 @@ def log_experiment(
         )
 
         # Hiperparámetros
-        mlflow.log_params(
-            model.get_params()
-        )
+        mlflow.log_params(model.get_params())
 
         # Métricas
         for metric_name, value in metrics.items():

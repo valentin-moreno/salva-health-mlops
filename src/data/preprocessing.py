@@ -15,7 +15,6 @@ Autor: Valentin Moreno Vásquez
 Proyecto: Salva Health MLOps
 """
 
-
 import pandas as pd
 
 
@@ -32,7 +31,6 @@ def clean_dates(df: pd.DataFrame) -> pd.DataFrame:
 
     Las fechas no interpretables se convierten en NaT y se reportan.
     """
-
 
     df = df.copy()
 
@@ -51,16 +49,9 @@ def clean_dates(df: pd.DataFrame) -> pd.DataFrame:
     invalid_dates = df["fecha_registro"].isna().sum()
 
     if invalid_dates > 0:
-        print(
-            f"Advertencia: {invalid_dates} fechas no pudieron convertirse"
-        )
+        print(f"Advertencia: {invalid_dates} fechas no pudieron convertirse")
 
-        print(
-            df.loc[
-                df["fecha_registro"].isna(),
-                "fecha_registro_original"
-            ].head(10)
-        )
+        print(df.loc[df["fecha_registro"].isna(), "fecha_registro_original"].head(10))
 
     # Eliminar columna auxiliar
     df.drop(
@@ -69,6 +60,7 @@ def clean_dates(df: pd.DataFrame) -> pd.DataFrame:
     )
 
     return df
+
 
 def clean_outliers(df: pd.DataFrame) -> pd.DataFrame:
     """
@@ -84,17 +76,12 @@ def clean_outliers(df: pd.DataFrame) -> pd.DataFrame:
 
     df = df.copy()
 
-    invalid_age = (
-        (df["edad_paciente"] < 0)
-        | (df["edad_paciente"] > 120)
-    )
+    invalid_age = (df["edad_paciente"] < 0) | (df["edad_paciente"] > 120)
 
     outliers = invalid_age.sum()
 
     if outliers > 0:
-        print(
-            f"Advertencia: {outliers} edades fuera del rango permitido."
-        )
+        print(f"Advertencia: {outliers} edades fuera del rango permitido.")
 
         df.loc[
             invalid_age,
@@ -102,6 +89,7 @@ def clean_outliers(df: pd.DataFrame) -> pd.DataFrame:
         ] = pd.NA
 
     return df
+
 
 def handle_missing_values(df: pd.DataFrame) -> pd.DataFrame:
     """
@@ -126,16 +114,13 @@ def handle_missing_values(df: pd.DataFrame) -> pd.DataFrame:
     ]
 
     for column in numeric_columns:
-        df[column] = df[column].fillna(
-            df[column].median()
-        )
+        df[column] = df[column].fillna(df[column].median())
 
     for column in categorical_columns:
-        df[column] = df[column].fillna(
-            df[column].mode()[0]
-        )
+        df[column] = df[column].fillna(df[column].mode()[0])
 
     return df
+
 
 def calculate_bmi(df: pd.DataFrame) -> pd.DataFrame:
     """
@@ -149,10 +134,7 @@ def calculate_bmi(df: pd.DataFrame) -> pd.DataFrame:
 
     df = df.copy()
 
-    df["imc"] = (
-        df["peso_kg"]
-        / ((df["altura_cm"] / 100) ** 2)
-    )
+    df["imc"] = df["peso_kg"] / ((df["altura_cm"] / 100) ** 2)
 
     return df
 
@@ -180,6 +162,7 @@ def encode_variables(df: pd.DataFrame) -> pd.DataFrame:
 
     return df
 
+
 def remove_duplicates(df: pd.DataFrame) -> pd.DataFrame:
     """
     Elimina registros completamente duplicados.
@@ -190,6 +173,7 @@ def remove_duplicates(df: pd.DataFrame) -> pd.DataFrame:
     df = df.drop_duplicates(subset="id_paciente")
 
     return df
+
 
 def preprocess_dataset(df: pd.DataFrame) -> pd.DataFrame:
     """

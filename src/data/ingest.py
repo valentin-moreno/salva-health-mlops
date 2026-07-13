@@ -37,9 +37,7 @@ def _get_container_client() -> ContainerClient:
         AZURE_STORAGE_CONNECTION_STRING
     )
 
-    return blob_service.get_container_client(
-        AZURE_CONTAINER_NAME
-    )
+    return blob_service.get_container_client(AZURE_CONTAINER_NAME)
 
 
 def load_patients() -> pd.DataFrame:
@@ -103,9 +101,7 @@ def load_signal(patient_id: str) -> pd.DataFrame:
 
     container = _get_container_client()
 
-    blob = container.get_blob_client(
-        f"senales/{patient_id}.csv"
-    )
+    blob = container.get_blob_client(f"senales/{patient_id}.csv")
 
     data = blob.download_blob().readall()
 

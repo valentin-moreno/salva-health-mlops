@@ -50,8 +50,8 @@ def extract_energy_features(
 
     ecg = signal["ecg_mV"].to_numpy()
 
-    energy = np.sum(ecg ** 2)
-    rms = np.sqrt(np.mean(ecg ** 2))
+    energy = np.sum(ecg**2)
+    rms = np.sqrt(np.mean(ecg**2))
     power = energy / len(ecg)
 
     return {
@@ -70,13 +70,9 @@ def extract_features(
 
     features = {}
 
-    features.update(
-        extract_statistical_features(signal)
-    )
+    features.update(extract_statistical_features(signal))
 
-    features.update(
-        extract_energy_features(signal)
-    )
+    features.update(extract_energy_features(signal))
 
     return pd.Series(features)
 
