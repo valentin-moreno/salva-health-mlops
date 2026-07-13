@@ -19,7 +19,6 @@ from src.utils.config import (
 )
 
 
-
 from azure.storage.blob import BlobServiceClient, ContainerClient
 
 from src.utils.secrets import (
@@ -83,18 +82,13 @@ def list_signals() -> list[str]:
 
     if signals_path.exists():
 
-        return sorted(
-            file.stem
-            for file in signals_path.glob("*.csv")
-        )
+        return sorted(file.stem for file in signals_path.glob("*.csv"))
 
     container = _get_container_client()
 
     signals = []
 
-    for blob in container.list_blobs(
-        name_starts_with="senales/"
-    ):
+    for blob in container.list_blobs(name_starts_with="senales/"):
 
         if blob.name.endswith(".csv"):
 
