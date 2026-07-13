@@ -36,7 +36,7 @@ jobs:
 
       - name: Ejecutar linting
         run: |
-          flake8 src
+          flake8 src --max-line-length=88
 
       - name: Ejecutar pruebas unitarias
         run: |
