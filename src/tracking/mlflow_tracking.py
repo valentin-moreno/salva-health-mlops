@@ -13,6 +13,7 @@ import mlflow.xgboost
 from src.utils.config import RANDOM_STATE
 from src.utils.config import TEST_SIZE
 
+
 def log_experiment(
     model,
     model_name: str,
@@ -45,15 +46,9 @@ def log_experiment(
             "dataset_final.parquet",
         )
 
-        mlflow.log_param(
-            "random_state",
-            RANDOM_STATE
-        )
-        
-        mlflow.log_param(
-            "test_size",
-              TEST_SIZE
-        )
+        mlflow.log_param("random_state", RANDOM_STATE)
+
+        mlflow.log_param("test_size", TEST_SIZE)
 
         # Hiperparámetros
         mlflow.log_params(model.get_params())
