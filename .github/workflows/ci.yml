@@ -1,4 +1,4 @@
-name: Salva Health CI
+name: Salva Health CI/CD
 
 on:
 
@@ -13,9 +13,14 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+
 jobs:
 
-  build-and-test:
+  ci:
+
+    name: Continuous Integration
 
     runs-on: ubuntu-latest
 
@@ -41,3 +46,41 @@ jobs:
       - name: Ejecutar pruebas unitarias
         run: |
           pytest -v
+
+  cd:
+
+    name: Continuous Delivery
+
+    runs-on: ubuntu-latest
+
+    needs: ci
+
+    if: github.event_name == 'push'
+
+    steps:
+
+      - name: Clonar repositorio
+        uses: actions/checkout@v4
+
+      - name: Iniciar sesión en Azure Container Registry
+        run: |
+          echo "${{ secrets.ACR_PASSWORD }}" | docker login \
+            ${{ secrets.ACR_LOGIN_SERVER }} \
+            --username ${{ secrets.ACR_USERNAME }} \
+            --password-stdin
+
+      - name: Definir etiqueta de la imagen
+        run: |
+          echo "IMAGE_TAG=${GITHUB_SHA::7}" >> $GITHUB_ENV
+
+      - name: Construir imagen Docker
+        run: |
+          docker build \
+            -t ${{ secrets.ACR_LOGIN_SERVER }}/salva-health-api:latest \
+            -t ${{ secrets.ACR_LOGIN_SERVER }}/salva-health-api:${{ env.IMAGE_TAG }} \
+            .
+
+      - name: Publicar imagen en Azure Container Registry
+        run: |
+          docker push ${{ secrets.ACR_LOGIN_SERVER }}/salva-health-api:latest
+          docker push ${{ secrets.ACR_LOGIN_SERVER }}/salva-health-api:${{ env.IMAGE_TAG }}
