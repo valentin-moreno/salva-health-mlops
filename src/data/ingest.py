@@ -13,7 +13,12 @@ from io import BytesIO
 
 import pandas as pd
 
-from src.utils.config import PROCESSED_DATA_PATH
+from src.utils.config import (
+    RAW_DATA_PATH,
+    PROCESSED_DATA_PATH,
+)
+
+
 
 from azure.storage.blob import BlobServiceClient, ContainerClient
 
@@ -49,6 +54,11 @@ def load_patients() -> pd.DataFrame:
     pd.DataFrame
         Información clínica de los pacientes.
     """
+    local_file = RAW_DATA_PATH / "pacientes.csv"
+
+    if local_file.exists():
+
+        return pd.read_csv(local_file)
 
     container = _get_container_client()
 
@@ -69,11 +79,22 @@ def list_signals() -> list[str]:
         IDs de pacientes con señal ECG.
     """
 
+    signals_path = RAW_DATA_PATH / "senales"
+
+    if signals_path.exists():
+
+        return sorted(
+            file.stem
+            for file in signals_path.glob("*.csv")
+        )
+
     container = _get_container_client()
 
     signals = []
 
-    for blob in container.list_blobs(name_starts_with="senales/"):
+    for blob in container.list_blobs(
+        name_starts_with="senales/"
+    ):
 
         if blob.name.endswith(".csv"):
 
@@ -98,6 +119,11 @@ def load_signal(patient_id: str) -> pd.DataFrame:
     pd.DataFrame
         Señal ECG del paciente.
     """
+    local_file = RAW_DATA_PATH / "senales" / f"{patient_id}.csv"
+
+    if local_file.exists():
+
+        return pd.read_csv(local_file)
 
     container = _get_container_client()
 

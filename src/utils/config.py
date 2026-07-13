@@ -19,7 +19,10 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
 # RUTAS DE DATOS
 
-# Directorio donde se almacenarán los datos procesados.
+# Directorio donde se almacenan los datos crudos.
+RAW_DATA_PATH = PROJECT_ROOT / "data" / "raw"
+
+# Directorio donde se almacenan los datos procesados.
 PROCESSED_DATA_PATH = PROJECT_ROOT / "data" / "processed"
 
 # RUTAS DE ARTEFACTOS
@@ -39,6 +42,10 @@ DOCS_PATH = PROJECT_ROOT / "docs"
 # Directorio para pruebas unitarias.
 TESTS_PATH = PROJECT_ROOT / "tests"
 
-# Configuraciónes para entrenamiento
+# CONFIGURACIÓN DE ENTRENAMIENTO
+
+# Semilla para garantizar reproducibilidad.
 RANDOM_STATE = 42
+
+# Proporción del conjunto de prueba.
 TEST_SIZE = 0.20
