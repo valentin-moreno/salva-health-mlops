@@ -17,7 +17,7 @@ Proyecto: Salva Health MLOps
 import pandas as pd
 
 from sklearn.model_selection import train_test_split
-
+from pathlib import Path
 from src.data.ingest import load_processed_dataset
 from src.utils.config import RANDOM_STATE
 from src.utils.config import TEST_SIZE
@@ -87,11 +87,19 @@ def split_dataset(
         stratify=y,
     )
 
-
-def prepare_train_test():
+def prepare_train_test(
+    dataset_path: str | None = None,
+):
     """
     Ejecuta el pipeline completo de preparación
     para entrenamiento.
+
+    Parameters
+    ----------
+    dataset_path : str, optional
+        Ruta alternativa del dataset. Si no se especifica,
+        se utiliza dataset_final.parquet del directorio
+        de datos procesados.
 
     Returns
     -------
@@ -99,9 +107,17 @@ def prepare_train_test():
         X_train, X_test, y_train, y_test
     """
 
-    dataset = load_processed_dataset(
-        "dataset_final.parquet"
-    )
+    if dataset_path is None:
+
+        dataset = load_processed_dataset(
+            "dataset_final.parquet"
+        )
+
+    else:
+
+        dataset = pd.read_parquet(
+            Path(dataset_path)
+        )
 
     X, y = prepare_features(dataset)
 

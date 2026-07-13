@@ -21,9 +21,16 @@ from src.models.save_model import save_model
 from src.tracking.mlflow_tracking import log_experiment
 
 
-def run_training_pipeline() -> pd.DataFrame:
+def run_training_pipeline(dataset_path: str | None = None,) -> pd.DataFrame:
     """
     Ejecuta el pipeline completo de entrenamiento.
+    
+    Parameters
+    ----------
+    dataset_path : str, optional
+        Ruta alternativa del dataset para entrenamiento.
+        Si no se especifica, se utiliza el dataset
+        procesado por defecto.
 
     Returns
     -------
@@ -37,7 +44,9 @@ def run_training_pipeline() -> pd.DataFrame:
         "Salva_Health_Model_Training"
     )
 
-    X_train, X_test, y_train, y_test = prepare_train_test()
+    X_train, X_test, y_train, y_test = prepare_train_test(
+        dataset_path=dataset_path,
+    )
 
     models = get_models()
 
