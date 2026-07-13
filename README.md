@@ -114,6 +114,7 @@ salva-health-mlops/
 │       └── dataset_final.parquet
 │
 ├── docs/
+│   └── reporte_tecnico_valentin_moreno.pdf
 │
 ├── mlruns/
 │
@@ -694,7 +695,6 @@ Durante el desarrollo, se usaron asistentes de IA como herramientas de soporte t
 * Revisión de arquitectura
 * Mejora de documentación
 * Asistencia en debugging
-* Guía de despliegue en la nube
 * Validación de buenas prácticas
 
 Todas las decisiones de implementación fueron verificadas mediante ejecución, pruebas y validación en el entorno desplegado.
