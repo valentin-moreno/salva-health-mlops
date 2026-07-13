@@ -1,7 +1,15 @@
 # Python
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
+
+# Virtual environment
+.venv/
+venv/
+
+# Environment variables
 config/.env
+.env
 
 # MLflow
 mlruns/
@@ -10,7 +18,20 @@ mlflow.db
 # Jupyter
 .ipynb_checkpoints/
 
-# OS
+# Operating System
 .DS_Store
 Thumbs.db
 
+# Windows metadata
+*:Zone.Identifier
+
+# IDEs
+.vscode/
+.idea/
+
+# Testing
+.pytest_cache/
+
+# Coverage
+.coverage
+htmlcov/

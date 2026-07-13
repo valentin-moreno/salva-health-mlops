@@ -95,22 +95,43 @@ El objetivo es demostrar un flujo de trabajo MLOps orientado a producción donde
 
 ---
 
-# 3. Estructura del repositorio
+## Estructura del proyecto
 
 ```text
 salva-health-mlops/
-
+│
+├── artifacts/
+│   └── models/
+│       └── best_model.joblib
 │
 ├── data/
 │   ├── raw/
+│   │   ├── pacientes.csv
+│   │   └── senales/
 │   └── processed/
+│       ├── patients.parquet
+│       ├── features.parquet
+│       └── dataset_final.parquet
+│
+├── docs/
+│
+├── mlruns/
+│
+├── notebooks/
+│   └── EDA_dataset_clinico.ipynb
 │
 ├── src/
+│   ├── api/
+│   │   ├── app.py
+│   │   ├── routes.py
+│   │   └── schemas.py
 │   │
 │   ├── data/
 │   │   ├── ingest.py
 │   │   ├── validation.py
 │   │   ├── preprocessing.py
+│   │   ├── merge.py
+│   │   ├── split.py
 │   │   └── save.py
 │   │
 │   ├── features/
@@ -119,33 +140,32 @@ salva-health-mlops/
 │   ├── models/
 │   │   ├── train.py
 │   │   ├── evaluate.py
-│   │   ├── register.py
-│   │   └── select_best.py
+│   │   ├── predict.py
+│   │   ├── load_model.py
+│   │   ├── save_model.py
+│   │   ├── select_best.py
+│   │   └── register.py
 │   │
 │   ├── pipeline/
-│   │   └── run_pipeline.py
+│   │   ├── run_pipeline.py
+│   │   └── train_pipeline.py
+│   │
+│   ├── tracking/
+│   │   └── mlflow_tracking.py
 │   │
 │   └── utils/
 │       ├── config.py
-│       └── logger.py
-│
-├── api/
-│   ├── main.py
-│   └── schemas.py
+│       ├── logger.py
+│       └── secrets.py
 │
 ├── tests/
-│
-├── artifacts/
-│   └── models/
-│       └── best_model.joblib
-│
-├── mlruns/
+│   └── test_training_pipeline.py
 │
 ├── Dockerfile
+├── pytest.ini
 ├── requirements.txt
 └── README.md
 ```
-
 ---
 
 # 4. Pipeline de datos
