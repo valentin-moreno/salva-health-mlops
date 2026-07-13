@@ -55,8 +55,6 @@ jobs:
 
     needs: ci
 
-    if: github.event_name == 'push'
-
     steps:
 
       - name: Clonar repositorio
