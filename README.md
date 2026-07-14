@@ -417,6 +417,13 @@ source .venv/bin/activate
 .venv\Scripts\activate
 ```
 
+### desactivar el entorno base
+
+**Linux / macOS**
+
+```bash
+conda deactivate
+```
 ---
 
 ## Instalar dependencias
