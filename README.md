@@ -381,7 +381,92 @@ artifacts/models/best_model.joblib
 
 ---
 
-# 10. Servicio de inferencia API
+
+
+# 10. Ejecución local
+
+## Clonar el repositorio
+
+```bash
+git clone -b feature/valentin_moreno https://github.com/valentin-moreno/salva-health-mlops.git
+cd salva-health-mlops
+```
+
+> **Nota:** El desarrollo del proyecto se encuentra en la rama `feature/valentin_moreno`, siguiendo las instrucciones de la prueba técnica.
+
+
+---
+
+## Crear entorno virtual
+
+```bash
+python -m venv .venv
+```
+
+### Activar el entorno
+
+**Linux / macOS**
+
+```bash
+source .venv/bin/activate
+```
+
+**Windows**
+
+```bash
+.venv\Scripts\activate
+```
+
+---
+
+## Instalar dependencias
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## Ejecutar el pipeline del proyecto
+
+```bash
+python -m src.pipeline.run_pipeline
+```
+
+---
+## Visualizar experimentos con MLflow
+
+Una vez finalizado el entrenamiento, inicia la interfaz de MLflow con:
+
+```bash
+mlflow ui
+```
+
+Por defecto, la interfaz estará disponible en:
+
+```text
+http://localhost:5000
+```
+
+Allí podrás consultar los experimentos, métricas, parámetros y artefactos registrados durante el entrenamiento.
+
+---
+
+
+## Ejecutar la API
+
+```bash
+uvicorn src.api.app:app --host 127.0.0.1 --port 8000
+```
+
+Documentación Swagger:
+
+```
+http://localhost:8000/docs
+```
+
+---
+# 11. Servicio de inferencia API
 
 El modelo entrenado se expone a través de FastAPI.
 
@@ -460,88 +545,6 @@ HTTP 422 Unprocessable Entity
 ```
 
 con información detallada de la validación.
-
----
-
-# 11. Ejecución local
-
-## Clonar el repositorio
-
-```bash
-git clone https://github.com//salva-health-mlops.git
-cd salva-health-mlops
-```
-
----
-
-## Crear entorno
-
-```bash
-python -m venv .venv
-```
-
-Activar:
-
-Linux:
-
-```bash
-source .venv/bin/activate
-```
-
-Windows:
-
-```bash
-.venv\Scripts\activate
-```
-
----
-
-## Instalar dependencias
-
-```bash
-pip install -r requirements.txt
-```
-
----
-
-## Ejecutar el pipeline del proyecto
-
-```bash
-python -m src.pipeline.run_pipeline
-```
-
----
-
-## Visualizar experimentos con MLflow
-
-Una vez finalizado el entrenamiento, inicia la interfaz de MLflow con:
-
-```bash
-mlflow ui
-```
-
-Por defecto, la interfaz estará disponible en:
-
-```text
-http://localhost:5000
-```
-
-Allí podrás consultar los experimentos, métricas, parámetros y artefactos registrados durante el entrenamiento.
-
----
-
-
-## Ejecutar la API
-
-```bash
-uvicorn api.main:app --host 0.0.0.0 --port 8000
-```
-
-Documentación Swagger:
-
-```
-http://localhost:8000/docs
-```
 
 ---
 
